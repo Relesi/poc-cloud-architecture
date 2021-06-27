@@ -8,5 +8,6 @@
 	Spring Validation 
 	Spring security
 	Spring Data
+	Swagger
 
 
