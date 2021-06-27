@@ -7,5 +7,6 @@
 	Spring Boot
 	Spring Validation 
 	Spring security
+	Spring Data
 
 
