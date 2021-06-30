@@ -14,6 +14,6 @@ The RESTful Modernization Biometric API contains the following features:
 * Unit tests and integration with JUnit and Mockito
 * Caching with EhCache
 * Continuous integration with TravisCI
-### How to run the application
+#### How to run the application
 Be sure to have Maven installed and added to the PATH of your operating system, just like Git.
 
