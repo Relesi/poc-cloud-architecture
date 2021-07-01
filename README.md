@@ -2,8 +2,6 @@
 
 ## Integrated Guide Poc Cloud Architecture
 
-### Biometric Modernization
-
 Biometric system API with Java and Spring Boot.
 #### RESTful API Details
 The RESTful Modernization Biometric API contains the following features:
