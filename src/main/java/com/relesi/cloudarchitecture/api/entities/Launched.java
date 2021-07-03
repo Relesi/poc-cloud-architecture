@@ -35,6 +35,9 @@ public class Launched implements Serializable {
         this.id = id;
     }
 
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "date", nullable = false)
     public Date getData() {
         return data;
     }
@@ -43,6 +46,7 @@ public class Launched implements Serializable {
         this.data = data;
     }
 
+    @Column(name = "description", nullable = true)
     public String getDescription() {
         return description;
     }
@@ -51,6 +55,7 @@ public class Launched implements Serializable {
         this.description = description;
     }
 
+    @Column(name = "localization", nullable = true)
     public String getLocalization() {
         return localization;
     }
@@ -59,6 +64,7 @@ public class Launched implements Serializable {
         this.localization = localization;
     }
 
+    @Column(name = "creation_date", nullable = false)
     public Date getCreationDate() {
         return creationDate;
     }
@@ -67,6 +73,7 @@ public class Launched implements Serializable {
         this.creationDate = creationDate;
     }
 
+    @Column(name = "update_date", nullable = false)
     public Date getUpdateDate() {
         return updateDate;
     }
@@ -75,6 +82,8 @@ public class Launched implements Serializable {
         this.updateDate = updateDate;
     }
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo", nullable = false)
     public TypeEnum getType() {
         return type;
     }
@@ -82,7 +91,8 @@ public class Launched implements Serializable {
     public void setType(TypeEnum type) {
         this.type = type;
     }
-
+    
+    @ManyToOne(fetch = FetchType.EAGER)
     public Employee getEmployee() {
         return employee;
     }
