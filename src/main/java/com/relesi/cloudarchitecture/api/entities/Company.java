@@ -102,8 +102,13 @@ public class Company implements Serializable {
 
     @Override
     public String toString() {
-        return "Company [id=" + id + ", businessName=" + businessName + ", EIN=" + EIN + ", creationDate="
-                + creationDate + ", updateDate=" + updateDate + ", employees=" + employees + "]";
+        return "Company{" +
+                "id=" + id +
+                ", businessName='" + businessName + '\'' +
+                ", EIN='" + EIN + '\'' +
+                ", creationDate=" + creationDate +
+                ", updateDate=" + updateDate +
+                ", employees=" + employees +
+                '}';
     }
-
 }
