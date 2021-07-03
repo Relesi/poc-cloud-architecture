@@ -90,4 +90,30 @@ public class Launched implements Serializable {
     public void setEmployee(Employee employee) {
         this.employee = employee;
     }
+
+    @PreUpdate
+    public void PreUpdate() {
+        updateDate = new Date();
+    }
+
+    @PrePersist
+    public void prePersist() {
+        final Date actual = new Date();
+        creationDate = actual;
+        updateDate = actual;
+    }
+
+    @Override
+    public String toString() {
+        return "Launched{" +
+                "id=" + id +
+                ", data=" + data +
+                ", description='" + description + '\'' +
+                ", localization='" + localization + '\'' +
+                ", creationDate=" + creationDate +
+                ", updateDate=" + updateDate +
+                ", type=" + type +
+                ", employee=" + employee +
+                '}';
+    }
 }
