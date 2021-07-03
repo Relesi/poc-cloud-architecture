@@ -18,98 +18,92 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "company")
-public class Company implements Serializable{
+public class Company implements Serializable {
 
-	private static final long serialVersionUID = -350928975939694877L;
+    private static final long serialVersionUID = -350928975939694877L;
 
-	private Long id;
-	private String businessName;
-	private String EIN;
-	private Date creationDate;
-	private Date updateDate;
-	private List<Empployee> employees;
-	
-	
-	public Company() {
-		
-	}
-	
-	@Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-	public Long getId() {
-		return id;
-	}
+    private Long id;
+    private String businessName;
+    private String EIN;
+    private Date creationDate;
+    private Date updateDate;
+    private List<Employee> employees;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public Company() {
 
-	@Column(name = "business_name", nullable = false)
-	public String getBusinessName() {
-		return businessName;
-	}
+    }
 
-	public void setBusinessName(String businessName) {
-		this.businessName = businessName;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    public Long getId() {
+        return id;
+    }
 
-	@Column(name = "ein", nullable = false)
-	public String getEIN() {
-		return EIN;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setEIN(String eIN) {
-		EIN = eIN;
-	}
+    @Column(name = "business_name", nullable = false)
+    public String getBusinessName() {
+        return businessName;
+    }
 
-	@Column(name = "creation_date", nullable = false)
-	public Date getCreationDate() {
-		return creationDate;
-	}
+    public void setBusinessName(String businessName) {
+        this.businessName = businessName;
+    }
 
-	public void setCreationDate(Date creationDate) {
-		this.creationDate = creationDate;
-	}
+    @Column(name = "ein", nullable = false)
+    public String getEIN() {
+        return EIN;
+    }
 
-	@Column(name = "update_date", nullable = false)
-	public Date getUpdateDate() {
-		return updateDate;
-	}
+    public void setEIN(String eIN) {
+        EIN = eIN;
+    }
 
+    @Column(name = "creation_date", nullable = false)
+    public Date getCreationDate() {
+        return creationDate;
+    }
 
-	public void setUpdateDate(Date updateDate) {
-		this.updateDate = updateDate;
-	}
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
 
+    @Column(name = "update_date", nullable = false)
+    public Date getUpdateDate() {
+        return updateDate;
+    }
 
-	@OneToMany(mappedBy = "company", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	public List<Empployee> getEmployees() {
-		return employees;
-	}
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
+    }
 
+    @OneToMany(mappedBy = "company", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    public List<Employee> getEmployees() {
+        return employees;
+    }
 
-	public void setEmployees(List<Empployee> employees) {
-		this.employees = employees;
-	}
-	
-	@PreUpdate
-	public void PreUpdate() {
-		updateDate = new Date();
-		
-	}
-	
-	@PrePersist
-	public void prePersist() {
-		final Date actual = new Date();
-		creationDate = actual;
-		updateDate = actual;
-		
-	}
-	
-	@Override
-	public String toString() {
-		return "Company [id=" + id + ", businessName=" + businessName + ", EIN=" + EIN + ", creationDate="
-				+ creationDate + ", updateDate=" + updateDate + ", employees=" + employees + "]";
-	}
+    public void setEmployees(List<Employee> employees) {
+        this.employees = employees;
+    }
+
+    @PreUpdate
+    public void PreUpdate() {
+        updateDate = new Date();
+    }
+
+    @PrePersist
+    public void prePersist() {
+        final Date actual = new Date();
+        creationDate = actual;
+        updateDate = actual;
+    }
+
+    @Override
+    public String toString() {
+        return "Company [id=" + id + ", businessName=" + businessName + ", EIN=" + EIN + ", creationDate="
+                + creationDate + ", updateDate=" + updateDate + ", employees=" + employees + "]";
+    }
 
 }
