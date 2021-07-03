@@ -35,7 +35,6 @@ public class Launched implements Serializable {
         this.id = id;
     }
 
-
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date", nullable = false)
     public Date getData() {
@@ -91,7 +90,7 @@ public class Launched implements Serializable {
     public void setType(TypeEnum type) {
         this.type = type;
     }
-    
+
     @ManyToOne(fetch = FetchType.EAGER)
     public Employee getEmployee() {
         return employee;
