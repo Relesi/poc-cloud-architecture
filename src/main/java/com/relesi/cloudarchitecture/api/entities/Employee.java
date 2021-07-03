@@ -2,14 +2,12 @@ package com.relesi.cloudarchitecture.api.entities;
 
 import com.relesi.cloudarchitecture.api.enums.ProfileEnum;
 
-import javax.persistence.Entity;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Table(name = "employee")
@@ -24,17 +22,19 @@ public class Employee implements Serializable{
 	private String ssn;
 	private BigDecimal hourValue;
 	private Float qtyHoursWorkedDay;
-	private Float qtyLunchHours;
+	private Float qtyHoursLunch;
 	private ProfileEnum profile;
 	private Date creationDate;
 	private Date updateDate;
 	private Company company;
-	private List<Launched> launcheds;
+	private List<Launched> launched;
 
 	public Employee(){
 
 	}
 
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	public Long getId() {
 		return id;
 	}
@@ -43,6 +43,7 @@ public class Employee implements Serializable{
 		this.id = id;
 	}
 
+	@Column(name = "name", nullable = false)
 	public String getName() {
 		return name;
 	}
@@ -51,6 +52,7 @@ public class Employee implements Serializable{
 		this.name = name;
 	}
 
+	@Column(name = "email", nullable = false)
 	public String getEmail() {
 		return email;
 	}
@@ -59,6 +61,7 @@ public class Employee implements Serializable{
 		this.email = email;
 	}
 
+	@Column(name = "password", nullable = false)
 	public String getPassword() {
 		return password;
 	}
@@ -67,6 +70,7 @@ public class Employee implements Serializable{
 		this.password = password;
 	}
 
+	@Column(name = "ssn", nullable = false)
 	public String getSsn() {
 		return ssn;
 	}
@@ -75,30 +79,50 @@ public class Employee implements Serializable{
 		this.ssn = ssn;
 	}
 
+	@Column(name = "hour_value", nullable = true)
 	public BigDecimal getHourValue() {
 		return hourValue;
+	}
+
+	@Transient
+	public Optional<BigDecimal> getHourValueOpt() {
+		return Optional.ofNullable(hourValue);
 	}
 
 	public void setHourValue(BigDecimal hourValue) {
 		this.hourValue = hourValue;
 	}
 
+	@Column(name = "qty_hours_worked_day", nullable = true)
 	public Float getQtyHoursWorkedDay() {
 		return qtyHoursWorkedDay;
+	}
+
+	@Transient
+	public Optional<Float> getQtyHoursWorkedDayOpt() {
+		return Optional.ofNullable(qtyHoursWorkedDay);
 	}
 
 	public void setQtyHoursWorkedDay(Float qtyHoursWorkedDay) {
 		this.qtyHoursWorkedDay = qtyHoursWorkedDay;
 	}
 
-	public Float getQtyLunchHours() {
-		return qtyLunchHours;
+	@Column(name = "qty_hours_launch", nullable = true)
+	public Float getQtyHoursLunch() {
+		return qtyHoursLunch;
 	}
 
-	public void setQtyLunchHours(Float qtyLunchHours) {
-		this.qtyLunchHours = qtyLunchHours;
+	@Transient
+	public Optional<Float> getQtyHoursLunchOpt() {
+		return Optional.ofNullable(qtyHoursLunch);
 	}
 
+	public void setQtyHoursLunch(Float qtyHoursLunch) {
+		this.qtyHoursLunch = qtyHoursLunch;
+	}
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "profile", nullable = false)
 	public ProfileEnum getProfile() {
 		return profile;
 	}
@@ -107,6 +131,7 @@ public class Employee implements Serializable{
 		this.profile = profile;
 	}
 
+	@Column(name = "creation_date", nullable = false)
 	public Date getCreationDate() {
 		return creationDate;
 	}
@@ -115,6 +140,7 @@ public class Employee implements Serializable{
 		this.creationDate = creationDate;
 	}
 
+	@Column(name = "update_date", nullable = false)
 	public Date getUpdateDate() {
 		return updateDate;
 	}
@@ -123,6 +149,7 @@ public class Employee implements Serializable{
 		this.updateDate = updateDate;
 	}
 
+	@ManyToOne(fetch = FetchType.EAGER)
 	public Company getCompany() {
 		return company;
 	}
@@ -131,12 +158,13 @@ public class Employee implements Serializable{
 		this.company = company;
 	}
 
-	public List<Launched> getLauncheds() {
-		return launcheds;
+	@OneToMany(mappedBy = "employee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	public List<Launched> getLaunched() {
+		return launched;
 	}
 
-	public void setLauncheds(List<Launched> launcheds) {
-		this.launcheds = launcheds;
+	public void setLaunched(List<Launched> launched) {
+		this.launched = launched;
 	}
 
 	@PreUpdate
@@ -161,12 +189,12 @@ public class Employee implements Serializable{
 				", ssn='" + ssn + '\'' +
 				", hourValue=" + hourValue +
 				", qtyHoursWorkedDay=" + qtyHoursWorkedDay +
-				", qtyLunchHours=" + qtyLunchHours +
+				", qtyHoursLunch=" + qtyHoursLunch +
 				", profile=" + profile +
 				", creationDate=" + creationDate +
 				", updateDate=" + updateDate +
 				", company=" + company +
-				", launcheds=" + launcheds +
+				", launched=" + launched +
 				'}';
 	}
 }
