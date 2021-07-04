@@ -1,7 +1,6 @@
 package com.relesi.cloudarchitecture.api.entities;
 
 import com.relesi.cloudarchitecture.api.enums.TypeEnum;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -126,3 +125,6 @@ public class Launched implements Serializable {
                 '}';
     }
 }
+
+
+
