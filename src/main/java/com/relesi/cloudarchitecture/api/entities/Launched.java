@@ -12,7 +12,7 @@ public class Launched implements Serializable {
     private static final long serialVersionUID = 6524560251526772839L;
 
     private Long id;
-    private Date data;
+    private Date currentDate;
     private String description;
     private String localization;
     private Date creationDate;
@@ -34,14 +34,16 @@ public class Launched implements Serializable {
         this.id = id;
     }
 
+
+
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "date", nullable = false)
-    public Date getData() {
-        return data;
+    @Column(name = "current_dates", nullable = false)
+    public Date getCurrentDate() {
+        return currentDate;
     }
 
-    public void setData(Date data) {
-        this.data = data;
+    public void setCurrentDate(Date currentDate) {
+        this.currentDate = currentDate;
     }
 
     @Column(name = "description", nullable = true)
@@ -81,7 +83,7 @@ public class Launched implements Serializable {
     }
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "tipo", nullable = false)
+    @Column(name = "type", nullable = false)
     public TypeEnum getType() {
         return type;
     }
@@ -115,7 +117,7 @@ public class Launched implements Serializable {
     public String toString() {
         return "Launched{" +
                 "id=" + id +
-                ", data=" + data +
+                ", currentDate=" + currentDate +
                 ", description='" + description + '\'' +
                 ", localization='" + localization + '\'' +
                 ", creationDate=" + creationDate +
