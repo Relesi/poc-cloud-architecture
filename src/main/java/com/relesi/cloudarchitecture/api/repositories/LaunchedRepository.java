@@ -20,9 +20,6 @@ public interface LaunchedRepository extends JpaRepository<Launched, Long> {
 
     List<Launched> findByEmployeeId(@Param("employeeId") Long employeeId);
     Page<Launched> findByEmployeeId(@Param("employeeId") Long employeeId, Pageable pageable);
-
-
-
 }
 
 
