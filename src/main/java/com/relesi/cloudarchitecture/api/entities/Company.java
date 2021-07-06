@@ -23,7 +23,7 @@ public class Company implements Serializable {
 
     private Long id;
     private String businessName;
-    private String EIN;
+    private String ein;
     private Date creationDate;
     private Date updateDate;
     private List<Employee> employees;
@@ -52,12 +52,12 @@ public class Company implements Serializable {
     }
 
     @Column(name = "ein", nullable = false)
-    public String getEIN() {
-        return EIN;
+    public String getEin() {
+        return ein;
     }
 
-    public void setEIN(String eIN) {
-        EIN = eIN;
+    public void setEin(String ein) {
+        this.ein = ein;
     }
 
     @Column(name = "creation_date", nullable = false)
@@ -104,7 +104,7 @@ public class Company implements Serializable {
         return "Company{" +
                 "id=" + id +
                 ", businessName='" + businessName + '\'' +
-                ", EIN='" + EIN + '\'' +
+                ", ein='" + ein + '\'' +
                 ", creationDate=" + creationDate +
                 ", updateDate=" + updateDate +
                 ", employees=" + employees +
