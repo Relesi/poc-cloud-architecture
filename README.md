@@ -15,5 +15,5 @@ The RESTful Modernization Biometric API contains the following features:
 #### How to run the application
 Be sure to have Maven installed and added to the PATH of your operating system, just like Git.
 
-## Development...
+### Development...
 
