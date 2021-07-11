@@ -15,5 +15,37 @@ The RESTful Modernization Biometric API contains the following features:
 #### How to run the application
 Be sure to have Maven installed and added to the PATH of your operating system, just like Git.
 
-### Development...
+### Travis Setup
+
+* Add to your `.travis.yml` file.
+```yml
+language: java
+after_success:
+  -language: java
+
+matrix:
+  include:
+    - os: linux
+      sudo: required
+      jdk: openjdk11
+    - os: linux
+      sudo: required
+      jdk: openjdk12
+
+script: ./gradlew check --info --stacktrace --console=plain --max-workers=1 --no-daemon --build-cache -Dkotlin.colors.enabled=false
+
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+  
+
+```
+Private Repos
+- Add to your `.travis.yml` file.
+
 
