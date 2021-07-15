@@ -1,8 +1,7 @@
 package com.relesi.cloudarchitecture.api.repositories;
 
 import com.relesi.cloudarchitecture.api.entities.Company;
-
-
+import com.relesi.cloudarchitecture.api.entities.Employee;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,23 +13,24 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.assertEquals;
 
-
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles("test")
-public class CompanyRepositoryTest {
+public class EmployeeRepositoryTest {
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     @Autowired
     private CompanyRepository companyRepository;
 
-    private  static  final String EIN=  "77185751000154";
+    private static final String EMAIL = "email@email.com";
+    private static final String SSN = "00851463070";
 
     @Before
     public void setUp() throws Exception{
-        Company company =  new Company();
-        company.setBusinessName("Example Company");
-        company.setEin(EIN);
-        this.companyRepository.save(company);
+        Company company = this.companyRepository.save(getCompanyData());
+        this.employeeRepository.save(getEmployeeData(company));
     }
 
     @After
@@ -38,11 +38,16 @@ public class CompanyRepositoryTest {
         this.companyRepository.deleteAll();
     }
 
+    public void testSearchByEmail(){
+        Employee employee = this.employeeRepository.findByEmail(EMAIL);
+        assertEquals(EMAIL, employee.getEmail());
+    }
+
     @Test
     public void testSearchByEin(){
-        Company company = this.companyRepository.findByEin(EIN);
-        assertEquals(EIN, company.getEin());
-
+        Employee employee = this.employeeRepository.findBySsn(SSN);
+        assertEquals(SSN, employee.getSsn());
     }
+
 
 }
