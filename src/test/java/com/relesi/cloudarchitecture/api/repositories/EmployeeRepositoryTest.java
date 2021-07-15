@@ -12,6 +12,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -33,6 +34,15 @@ public class EmployeeRepositoryTest {
         this.employeeRepository.save(getEmployeeData(company));
     }
 
+
+
+    private Company getCompanyData() {
+        Company company = new Company();
+        company.setBusinessName("Company Technology");
+        company.setEin("78349766000173");
+        return company;
+    }
+
     @After
     public final void tearDown(){
         this.companyRepository.deleteAll();
@@ -48,6 +58,20 @@ public class EmployeeRepositoryTest {
         Employee employee = this.employeeRepository.findBySsn(SSN);
         assertEquals(SSN, employee.getSsn());
     }
+
+    @Test
+    public void testSearchEmployeeByEmailOrSsnToEmailInvalid(){
+        Employee employee = this.employeeRepository.findBySsnOrEmail(SSN, "email@invalido.com");
+        assertNotNull(employee);
+    }
+
+    @Test
+    public void testSearchEmployeeByEmailAndSsnToEmailInvalid(){
+        Employee employee = this.employeeRepository.findBySsnOrEmail("123456789", EMAIL);
+        assertNotNull(employee);
+    }
+
+
 
 
 }
