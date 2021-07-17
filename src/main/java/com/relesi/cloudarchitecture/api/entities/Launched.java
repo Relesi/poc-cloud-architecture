@@ -34,8 +34,6 @@ public class Launched implements Serializable {
         this.id = id;
     }
 
-
-
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "current_dates", insertable = false, updatable = false)
     public Date getCurrentDate() {
@@ -127,6 +125,3 @@ public class Launched implements Serializable {
                 '}';
     }
 }
-
-
-
