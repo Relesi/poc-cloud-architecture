@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 import com.relesi.cloudarchitecture.api.entities.Company;
 import com.relesi.cloudarchitecture.api.services.CompanyService;
 
@@ -30,6 +29,6 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public Company persist(Company company) {
         log.info("Persisting Company: {}", company);
-        return companyRepository.save(company);
+        return this.companyRepository.save(company);
     }
 }
