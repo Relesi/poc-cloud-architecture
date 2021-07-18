@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -56,14 +57,14 @@ public class LaunchedRepositoryTest {
 
 
     @Test
-    public void testSearchLaunchedByEmployeeId(){
+    public void testSearchLaunchedByEmployeeIdPaged(){
         PageRequest page = new PageRequest(0, 10);
-        List<Launched> launcheds = this.launchedRepository.findByEmployeeId(employeeId);
-        //assertEquals(2, launcheds.getClass());
+        Page<Launched> launcheds = this.launchedRepository.findByEmployeeId(employeeId, page);
+        assertEquals(2, launcheds.getTotalElements());
     }
 
     @Test
-    public void testSearchLaunchedByEmployeeIdPaged(){
+    public void testSearchLaunchedByEmployeeId(){
         final List<Launched> launcheds = this.launchedRepository.findByEmployeeId(employeeId);
         assertEquals(2, launcheds.size());
     }
