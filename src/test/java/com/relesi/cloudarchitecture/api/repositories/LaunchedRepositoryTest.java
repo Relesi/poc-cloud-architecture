@@ -55,7 +55,6 @@ public class LaunchedRepositoryTest {
         this.companyRepository.deleteAll();
     }
 
-
     @Test
     public void testSearchLaunchedByEmployeeIdPaged(){
         PageRequest page = new PageRequest(0, 10);

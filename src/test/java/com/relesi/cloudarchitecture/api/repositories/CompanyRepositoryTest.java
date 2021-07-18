@@ -23,23 +23,23 @@ public class CompanyRepositoryTest {
     @Autowired
     private CompanyRepository companyRepository;
 
-    private  static  final String EIN=  "77185751000154";
+    private static final String EIN = "77185751000154";
 
     @Before
-    public void setUp() throws Exception{
-        Company company =  new Company();
+    public void setUp() throws Exception {
+        Company company = new Company();
         company.setBusinessName("Example Company");
         company.setEin(EIN);
         this.companyRepository.save(company);
     }
 
     @After
-    public final void tearDown(){
+    public final void tearDown() {
         this.companyRepository.deleteAll();
     }
 
     @Test
-    public void testSearchByEin(){
+    public void testSearchByEin() {
         Company company = this.companyRepository.findByEin(EIN);
         assertEquals(EIN, company.getEin());
 

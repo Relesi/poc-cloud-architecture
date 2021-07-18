@@ -38,24 +38,6 @@ public class EmployeeRepositoryTest {
         this.employeeRepository.save(getEmployeeData(company));
     }
 
-    private Employee getEmployeeData(Company company) throws NoSuchAlgorithmException {
-        Employee employee = new Employee();
-        employee.setName("Renato Lessa");
-        employee.setProfile(ProfileEnum.ROLE_USUARIO);
-        employee.setPassword(PasswordUtils.generateBCrypt("123456"));
-        employee.setSsn(SSN);
-        employee.setEmail(EMAIL);
-        employee.setCompany(company);
-        return employee;
-    }
-
-    private Company getCompanyData() {
-        Company company = new Company();
-        company.setBusinessName("Company Technology");
-        company.setEin("78349766000173");
-        return company;
-    }
-
     @After
     public final void tearDown() {
         this.companyRepository.deleteAll();
@@ -83,5 +65,24 @@ public class EmployeeRepositoryTest {
         Employee employee = this.employeeRepository.findBySsnOrEmail("123456789", EMAIL);
         assertNotNull(employee);
     }
+
+    private Employee getEmployeeData(Company company) throws NoSuchAlgorithmException {
+        Employee employee = new Employee();
+        employee.setName("Renato Lessa");
+        employee.setProfile(ProfileEnum.ROLE_USUARIO);
+        employee.setPassword(PasswordUtils.generateBCrypt("123456"));
+        employee.setSsn(SSN);
+        employee.setEmail(EMAIL);
+        employee.setCompany(company);
+        return employee;
+    }
+
+    private Company getCompanyData() {
+        Company company = new Company();
+        company.setBusinessName("Company Technology");
+        company.setEin("78349766000173");
+        return company;
+    }
+
 
 }
