@@ -42,6 +42,7 @@ public class EmployeeRepositoryTest {
     public final void tearDown() {
         this.companyRepository.deleteAll();
     }
+
     @Test
     public void testSearchByEmail() {
         Employee employee = this.employeeRepository.findByEmail(EMAIL);
