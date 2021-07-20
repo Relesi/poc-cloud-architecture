@@ -1,7 +1,6 @@
 package com.relesi.cloudarchitecture.api.entities;
 
 import com.relesi.cloudarchitecture.api.enums.ProfileEnum;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
