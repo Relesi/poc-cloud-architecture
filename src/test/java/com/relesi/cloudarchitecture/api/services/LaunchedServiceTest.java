@@ -11,6 +11,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ActiveProfiles;
@@ -42,6 +43,11 @@ public class LaunchedServiceTest {
         BDDMockito.given(this.launchedRepository.save(Mockito.any(Launched.class))).willReturn(new Launched());
     }
 
+    @Test
+    public void testSearchLaunchedByEmployeeId(){
+        Page<Launched> launched = this.launchedService.searchByEmployeeId(1L, new PageRequest(0, 10));
+        assertNotNull(launched);
+    }
 
 
 
