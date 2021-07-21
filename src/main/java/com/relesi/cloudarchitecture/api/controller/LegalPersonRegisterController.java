@@ -10,6 +10,7 @@ import com.relesi.cloudarchitecture.api.services.CompanyService;
 import com.relesi.cloudarchitecture.api.services.EmployeeService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,14 +40,29 @@ public class LegalPersonRegisterController {
     public ResponseEntity<Response<LegalPersonRegisterDto>> register(@Valid @RequestBody LegalPersonRegisterDto legalPersonRegisterDto,
                                                                      BindingResult result) throws NoSuchAlgorithmException{
 
+        log.info("Signing up LP: {}", legalPersonRegisterDto.toString());
+        Response<LegalPersonRegisterDto> response = new Response<LegalPersonRegisterDto>();
+
+        validateExistingData(legalPersonRegisterDto, result);
+
+
+
+
         //TODO
 
         return null;
 
     }
 
+    private void validateExistingData(LegalPersonRegisterDto legalPersonRegisterDto, BindingResult result) {
+        this.companyService.searchByEin(legalPersonRegisterDto.getEin())
+                .ifPresent(comp -> result.addError(new ObjectError("company","Existing Company.")));
 
+        this.employeeService.searchBySsn(legalPersonRegisterDto.getSsn())
+                .ifPresent(employ -> result.addError(new ObjectError("employee", "Existing SSN")));
 
-
+        this.employeeService.searchByEmail(legalPersonRegisterDto.getEmail())
+                .ifPresent(employ -> result.addError(new ObjectError("employee", "Existing Email")));
+    }
 
 }
