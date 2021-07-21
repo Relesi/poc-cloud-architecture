@@ -27,7 +27,6 @@ public class LegalPersonRegisterController {
 
     private static final Logger log = LoggerFactory.getLogger(LegalPersonRegisterController.class);
 
-
     @Autowired
     private EmployeeService employeeService;
 
@@ -38,6 +37,14 @@ public class LegalPersonRegisterController {
 
     }
 
+    /***
+     * Register a legal person in the system.
+     *
+     * @param legalPersonRegisterDto
+     * @param result
+     * @return ResponseEntity<Response<LegalPersonRegisterDto>>
+     * @throws NoSuchAlgorithmException
+     */
     @PostMapping
     public ResponseEntity<Response<LegalPersonRegisterDto>> register(@Valid @RequestBody LegalPersonRegisterDto legalPersonRegisterDto,
                                                                      BindingResult result) throws NoSuchAlgorithmException{
@@ -49,13 +56,19 @@ public class LegalPersonRegisterController {
         Company company = this.convertDtoToCompany(legalPersonRegisterDto);
         Employee employee = this.convertDtoToEmployee(legalPersonRegisterDto, result);
 
+        if (result.hasErrors()){
+            log.error("Error validating LP registration data: {}", result.getAllErrors());
+            result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
+            return ResponseEntity.badRequest().body(response);
+        }
 
+        this.companyService.persist(company);
+        employee.setCompany(company);
+        this.employeeService.persist(employee);
 
+        response.setData(this.convertLegalPersonRegisterDto(employee));
 
-
-        //TODO
-
-        return null;
+        return ResponseEntity.ok(response);
 
     }
 
@@ -107,6 +120,24 @@ public class LegalPersonRegisterController {
         employee.setPassword(PasswordUtils.generateBCrypt(legalPersonRegisterDto.getPassword()));
 
         return employee;
+    }
+
+    /***
+     * Populates the registration DTO with the employee and company data.
+     *
+     * @param employee
+     * @return
+     */
+    private LegalPersonRegisterDto convertLegalPersonRegisterDto(Employee employee) {
+        LegalPersonRegisterDto legalPersonRegisterDto = new LegalPersonRegisterDto();
+        legalPersonRegisterDto.setId(employee.getId());
+        legalPersonRegisterDto.setName(employee.getName());
+        legalPersonRegisterDto.setEmail(employee.getEmail());
+        legalPersonRegisterDto.setSsn(employee.getSsn());
+        legalPersonRegisterDto.setBusinessName(employee.getCompany().getBusinessName());
+        legalPersonRegisterDto.setEin(employee.getCompany().getEin());
+
+        return legalPersonRegisterDto;
     }
 
 }

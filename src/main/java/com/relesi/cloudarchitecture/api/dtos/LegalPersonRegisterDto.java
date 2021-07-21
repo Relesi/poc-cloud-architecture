@@ -17,7 +17,7 @@ public class LegalPersonRegisterDto {
     private String businessName;
     private String ein;
 
-    private LegalPersonRegisterDto(){
+    public LegalPersonRegisterDto(){
 
     }
 
