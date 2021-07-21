@@ -1,14 +1,13 @@
 package com.relesi.cloudarchitecture.api.controller;
 
 import com.relesi.cloudarchitecture.api.Response.Response;
-import com.relesi.cloudarchitecture.api.dto.LegalPersonRegisterDto;
+import com.relesi.cloudarchitecture.api.dtos.LegalPersonRegisterDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.relesi.cloudarchitecture.api.services.CompanyService;
 import com.relesi.cloudarchitecture.api.services.EmployeeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
