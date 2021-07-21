@@ -1,6 +1,5 @@
 package com.relesi.cloudarchitecture.api.services;
 
-import com.relesi.cloudarchitecture.api.entities.Employee;
 import com.relesi.cloudarchitecture.api.entities.Launched;
 import com.relesi.cloudarchitecture.api.repositories.LaunchedRepository;
 import org.junit.Before;
@@ -44,26 +43,23 @@ public class LaunchedServiceTest {
     }
 
     @Test
-    public void testSearchLaunchedByEmployeeId(){
+    public void testSearchLaunchedByEmployeeId() {
         Page<Launched> launched = this.launchedService.searchByEmployeeId(1L, new PageRequest(0, 10));
         assertNotNull(launched);
     }
 
-
-
     @Test
-    public void testSearchLaunchedById(){
+    public void testSearchLaunchedById() {
         final Optional<Launched> launched = this.launchedService.searchById(1L);
         assertNotNull(launched);
 
     }
 
     @Test
-    public void testPersistLaunched(){
+    public void testPersistLaunched() {
         Launched launched = this.launchedService.persist(new Launched());
         assertNotNull(launched);
     }
-
 
 
 }
