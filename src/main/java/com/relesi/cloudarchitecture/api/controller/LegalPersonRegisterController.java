@@ -4,6 +4,8 @@ import com.relesi.cloudarchitecture.api.Response.Response;
 import com.relesi.cloudarchitecture.api.dtos.LegalPersonRegisterDto;
 import com.relesi.cloudarchitecture.api.entities.Company;
 import com.relesi.cloudarchitecture.api.entities.Employee;
+import com.relesi.cloudarchitecture.api.enums.ProfileEnum;
+import com.relesi.cloudarchitecture.api.utils.PasswordUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,6 +88,25 @@ public class LegalPersonRegisterController {
         company.setBusinessName(legalPersonRegisterDto.getBusinessName());
 
         return  company;
+    }
+
+    /***
+     * Converts DTO data to employee.
+     *
+     * @param legalPersonRegisterDto
+     * @param result
+     * @return Employee
+     * @throws NoSuchAlgorithmException
+     */
+    private Employee convertDtoToEmployee(LegalPersonRegisterDto legalPersonRegisterDto, BindingResult result) throws NoSuchAlgorithmException {
+        Employee employee = new Employee();
+        employee.setName(legalPersonRegisterDto.getName());
+        employee.setEmail(legalPersonRegisterDto.getEmail());
+        employee.setSsn(legalPersonRegisterDto.getSsn());
+        employee.setProfile(ProfileEnum.ROLE_ADMIN);
+        employee.setPassword(PasswordUtils.generateBCrypt(legalPersonRegisterDto.getPassword()));
+
+        return employee;
     }
 
 }
