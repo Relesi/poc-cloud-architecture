@@ -69,4 +69,17 @@ public class LegalPersonRegisterDto {
     public void setEin(String ein) {
         this.ein = ein;
     }
+
+    @Override
+    public String toString() {
+        return "LegalPersonRegisterDto{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", ssn='" + ssn + '\'' +
+                ", businessName='" + businessName + '\'' +
+                ", ein='" + ein + '\'' +
+                '}';
+    }
 }
