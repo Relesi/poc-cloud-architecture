@@ -34,6 +34,14 @@ public class NaturalPersonRegisterController {
 
     }
 
+    /***
+     * Register a employee natural person in the system.
+     *
+     * @param naturalPersonRegisterDto
+     * @param result
+     * @return ResponseEntity<Response<NaturalPersonRegisterDto>
+     * @throws NoSuchAlgorithmException
+     */
     @PostMapping
     public ResponseEntity<Response<NaturalPersonRegisterDto>> register(@Valid @RequestBody NaturalPersonRegisterDto naturalPersonRegisterDto,
                                                                        BindingResult result) throws NoSuchAlgorithmException{
