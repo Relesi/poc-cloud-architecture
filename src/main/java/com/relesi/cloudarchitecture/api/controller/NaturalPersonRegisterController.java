@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.NoSuchAlgorithmException;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/natural-person")
@@ -42,10 +43,21 @@ public class NaturalPersonRegisterController {
         validateExistingData(naturalPersonRegisterDto, result);
         Employee employee = this.convertDtoToEmployee(naturalPersonRegisterDto);
 
+        if (result.hasErrors()) {
+            log.error("Error validating NP registration data: {}", result.getAllErrors());
+            result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
+            return ResponseEntity.badRequest().body(response);
+        }
 
-        //TODO
-        return null;
+        Optional<Company> company = this.companyService.searchByEin(naturalPersonRegisterDto.getEin());
+        company.ifPresent(comp -> employee.setCompany(comp));
+        this.employeeService.persist(employee);
+
+        response.setData(this.convertNaturalPersonRegisterDto(employee));
+        return ResponseEntity.ok(response);
     }
+
+
 
     private void validateExistingData(NaturalPersonRegisterDto naturalPersonRegisterDto, BindingResult result) {
 
@@ -57,6 +69,12 @@ public class NaturalPersonRegisterController {
         //TODO
         return null;
 
+    }
+
+    private NaturalPersonRegisterDto convertNaturalPersonRegisterDto(Employee employee) {
+
+        //TODO
+        return null;
     }
 
 
