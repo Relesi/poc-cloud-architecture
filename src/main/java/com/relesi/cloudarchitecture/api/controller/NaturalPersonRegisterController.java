@@ -113,12 +113,31 @@ public class NaturalPersonRegisterController {
 
     }
 
+    /***
+     * Populates the registration DTO with the employee and company data.
+     *
+     * @param employee
+     * @return
+     */
     private NaturalPersonRegisterDto convertNaturalPersonRegisterDto(Employee employee) {
 
-        //TODO
-        return null;
+        NaturalPersonRegisterDto naturalPersonRegisterDto = new NaturalPersonRegisterDto();
+
+        naturalPersonRegisterDto.setId(employee.getId());
+        naturalPersonRegisterDto.setName(employee.getName());
+        naturalPersonRegisterDto.setEmail(employee.getEmail());
+        naturalPersonRegisterDto.setSsn(employee.getSsn());
+        naturalPersonRegisterDto.setEin(employee.getCompany().getEin());
+
+        employee.getQtyHoursLunchOpt().ifPresent(qtyLunchHours -> naturalPersonRegisterDto
+                .setQtyLunchHours(Optional.of(Float.toString(qtyLunchHours))));
+
+        employee.getQtyHoursWorkedDayOpt().ifPresent(qtyHoursWorkedDay -> naturalPersonRegisterDto
+                .setQtyHoursWorkedDay(Optional.of(Float.toString(qtyHoursWorkedDay))));
+
+        employee.getHourValueOpt().ifPresent(hourValue -> naturalPersonRegisterDto
+                .setHourValue(Optional.of(hourValue.toString())));
+
+        return naturalPersonRegisterDto;
     }
-
-
-
 }
