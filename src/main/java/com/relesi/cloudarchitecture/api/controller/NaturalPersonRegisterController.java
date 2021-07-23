@@ -4,6 +4,8 @@ import com.relesi.cloudarchitecture.api.Response.Response;
 import com.relesi.cloudarchitecture.api.dtos.NaturalPersonRegisterDto;
 import com.relesi.cloudarchitecture.api.entities.Company;
 import com.relesi.cloudarchitecture.api.entities.Employee;
+import com.relesi.cloudarchitecture.api.enums.ProfileEnum;
+import com.relesi.cloudarchitecture.api.utils.PasswordUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.relesi.cloudarchitecture.api.services.CompanyService;
@@ -15,6 +17,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
 
@@ -67,7 +70,12 @@ public class NaturalPersonRegisterController {
     }
 
 
-
+    /***
+     * Check if the company is registered and if the employee does not exist in the database.
+     *
+     * @param naturalPersonRegisterDto
+     * @param result
+     */
     private void validateExistingData(NaturalPersonRegisterDto naturalPersonRegisterDto, BindingResult result) {
         Optional<Company> company = this.companyService.searchByEin(naturalPersonRegisterDto.getEin());
         if (!company.isPresent()) {
@@ -78,13 +86,30 @@ public class NaturalPersonRegisterController {
                 .ifPresent(employ -> result.addError(new ObjectError("employee", "Existing SSN.")));
         this.employeeService.searchByEmail(naturalPersonRegisterDto.getEmail())
                 .ifPresent(employ -> result.addError(new ObjectError("employee", "Existing Email.")));
-
     }
 
-    private Employee convertDtoToEmployee(NaturalPersonRegisterDto naturalPersonRegisterDto) {
 
-        //TODO
-        return null;
+    /***
+     * Converts DTO data to employee.
+     *
+     * @param naturalPersonRegisterDto
+     * @return
+     * @throws NoSuchAlgorithmException
+     */
+    private Employee convertDtoToEmployee(NaturalPersonRegisterDto naturalPersonRegisterDto) throws NoSuchAlgorithmException {
+
+        Employee employee = new Employee();
+
+        employee.setName(naturalPersonRegisterDto.getName());
+        employee.setEmail(naturalPersonRegisterDto.getEmail());
+        employee.setSsn(naturalPersonRegisterDto.getSsn());
+        employee.setProfile(ProfileEnum.ROLE_USUARIO);
+        employee.setPassword(PasswordUtils.generateBCrypt(naturalPersonRegisterDto.getPassword()));
+        naturalPersonRegisterDto.getQtyLunchHours().ifPresent(qtyLunchHours -> employee.setQtyHoursLunch(Float.valueOf(qtyLunchHours)));
+        naturalPersonRegisterDto.getQtyHoursWorkedDay().ifPresent(qtyHoursWorkedDay -> employee.setQtyHoursWorkedDay(Float.valueOf(qtyHoursWorkedDay)));
+        naturalPersonRegisterDto.getHourValue().ifPresent(hourValue -> employee.setHourValue(new BigDecimal(hourValue)));
+
+        return employee;
 
     }
 
