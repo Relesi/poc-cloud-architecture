@@ -11,6 +11,7 @@ import com.relesi.cloudarchitecture.api.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -68,7 +69,15 @@ public class NaturalPersonRegisterController {
 
 
     private void validateExistingData(NaturalPersonRegisterDto naturalPersonRegisterDto, BindingResult result) {
+        Optional<Company> company = this.companyService.searchByEin(naturalPersonRegisterDto.getEin());
+        if (!company.isPresent()) {
+            result.addError(new ObjectError("company", "Company not registered."));
+        }
 
+        this.employeeService.searchBySsn(naturalPersonRegisterDto.getSsn())
+                .ifPresent(employ -> result.addError(new ObjectError("employee", "Existing SSN.")));
+        this.employeeService.searchByEmail(naturalPersonRegisterDto.getEmail())
+                .ifPresent(employ -> result.addError(new ObjectError("employee", "Existing Email.")));
 
     }
 

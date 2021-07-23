@@ -80,7 +80,7 @@ public class LegalPersonRegisterController {
      */
     private void validateExistingData(LegalPersonRegisterDto legalPersonRegisterDto, BindingResult result) {
         this.companyService.searchByEin(legalPersonRegisterDto.getEin())
-                .ifPresent(comp -> result.addError(new ObjectError("company","Existing Company.")));
+                .ifPresent(comp -> result.addError(new ObjectError("company","Company not registered..")));
 
         this.employeeService.searchBySsn(legalPersonRegisterDto.getSsn())
                 .ifPresent(employ -> result.addError(new ObjectError("employee", "Existing SSN")));
