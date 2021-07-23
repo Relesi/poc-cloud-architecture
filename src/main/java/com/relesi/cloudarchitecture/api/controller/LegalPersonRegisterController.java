@@ -49,7 +49,7 @@ public class LegalPersonRegisterController {
     public ResponseEntity<Response<LegalPersonRegisterDto>> register(@Valid @RequestBody LegalPersonRegisterDto legalPersonRegisterDto,
                                                                      BindingResult result) throws NoSuchAlgorithmException{
 
-        log.info("Signing up LP: {}", legalPersonRegisterDto.toString());
+        log.info("Registering LP: {}", legalPersonRegisterDto.toString());
         Response<LegalPersonRegisterDto> response = new Response<LegalPersonRegisterDto>();
 
         validateExistingData(legalPersonRegisterDto, result);
