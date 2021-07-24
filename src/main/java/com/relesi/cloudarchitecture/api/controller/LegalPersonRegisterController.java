@@ -49,7 +49,7 @@ public class LegalPersonRegisterController {
     public ResponseEntity<Response<LegalPersonRegisterDto>> register(@Valid @RequestBody LegalPersonRegisterDto legalPersonRegisterDto,
                                                                      BindingResult result) throws NoSuchAlgorithmException{
 
-        log.info("Signing up LP: {}", legalPersonRegisterDto.toString());
+        log.info("Registering LP: {}", legalPersonRegisterDto.toString());
         Response<LegalPersonRegisterDto> response = new Response<LegalPersonRegisterDto>();
 
         validateExistingData(legalPersonRegisterDto, result);
@@ -80,7 +80,7 @@ public class LegalPersonRegisterController {
      */
     private void validateExistingData(LegalPersonRegisterDto legalPersonRegisterDto, BindingResult result) {
         this.companyService.searchByEin(legalPersonRegisterDto.getEin())
-                .ifPresent(comp -> result.addError(new ObjectError("company","Existing Company.")));
+                .ifPresent(comp -> result.addError(new ObjectError("company","Company not registered..")));
 
         this.employeeService.searchBySsn(legalPersonRegisterDto.getSsn())
                 .ifPresent(employ -> result.addError(new ObjectError("employee", "Existing SSN")));
