@@ -3,7 +3,6 @@ package com.relesi.cloudarchitecture.api.controller;
 import com.relesi.cloudarchitecture.api.Response.Response;
 import com.relesi.cloudarchitecture.api.dtos.CompanyDto;
 import com.relesi.cloudarchitecture.api.entities.Company;
-import com.relesi.cloudarchitecture.api.entities.Employee;
 import com.relesi.cloudarchitecture.api.services.CompanyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,21 +10,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/company")
 @CrossOrigin(origins = "*")
-public class CompanyContreller {
+public class CompanyController {
 
-    private static final Logger log = LoggerFactory.getLogger(CompanyContreller.class);
+    private static final Logger log = LoggerFactory.getLogger(CompanyController.class);
 
     @Autowired
     private CompanyService companyService;
 
-    public CompanyContreller(){
+    public CompanyController() {
 
     }
 
@@ -36,7 +33,7 @@ public class CompanyContreller {
      * @return
      */
     @GetMapping(value = "/ein/{ein}")
-    public ResponseEntity<Response<CompanyDto>> searchByEin(@PathVariable("ein") String ein){
+    public ResponseEntity<Response<CompanyDto>> searchByEin(@PathVariable("ein") String ein) {
         log.info("Search Company by EIN: {}", ein);
 
         Response<CompanyDto> response = new Response<CompanyDto>();
@@ -65,8 +62,7 @@ public class CompanyContreller {
         companyDto.setEin(company.getEin());
         companyDto.setEin(company.getBusinessName());
 
-        return null;
+        return companyDto;
     }
-
 
 }
