@@ -29,7 +29,12 @@ public class CompanyContreller {
 
     }
 
-
+    /***
+     * Return a company given a EIN
+     *
+     * @param ein
+     * @return
+     */
     @GetMapping(value = "/ein/{ein}")
     public ResponseEntity<Response<CompanyDto>> searchByEin(@PathVariable("ein") String ein){
         log.info("Search Company by EIN: {}", ein);
@@ -49,7 +54,11 @@ public class CompanyContreller {
     }
 
     private CompanyDto convertCompanyDto(Company company) {
-        //TODO
+        CompanyDto companyDto = new CompanyDto();
+        companyDto.setId(company.getId());
+        companyDto.setEin(company.getEin());
+        companyDto.setEin(company.getBusinessName());
+
         return null;
     }
 
