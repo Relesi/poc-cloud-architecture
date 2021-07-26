@@ -53,6 +53,12 @@ public class CompanyContreller {
 
     }
 
+    /***
+     * Populates a DTO with a company's data
+     *
+     * @param company
+     * @return
+     */
     private CompanyDto convertCompanyDto(Company company) {
         CompanyDto companyDto = new CompanyDto();
         companyDto.setId(company.getId());
