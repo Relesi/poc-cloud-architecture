@@ -66,7 +66,7 @@ public class EmployeeController {
     }
 
     private void updateEmployeeData(Employee employee, EmployeeDto employeeDto, BindingResult result) throws NoSuchAlgorithmException {
-        
+
         employee.setName(employeeDto.getName());
 
         if(!employee.getEmail().equals(employeeDto.getEmail())){
@@ -74,6 +74,18 @@ public class EmployeeController {
                     .ifPresent(empl -> result.addError(new ObjectError("emial", "Existing Email")));
             employee.setEmail(employeeDto.getEmail());
         }
+
+        employee.setQtyHoursLunch(null);
+        employeeDto.getQtyHoursLunch()
+                .ifPresent(qtyHoursLunch -> employee.setQtyHoursLunch(Float.valueOf(qtyHoursLunch)));
+
+
+        //TODO employeeDto.qtyHoursWorkedDay
+
+        //TODO employeeDto.hourValue
+
+        //TODO employeeDto.password
+
     }
 
     private EmployeeDto convertEmployeeToDto(Employee employee) {
