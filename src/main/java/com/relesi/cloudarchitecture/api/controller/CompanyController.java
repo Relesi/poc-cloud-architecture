@@ -60,7 +60,7 @@ public class CompanyController {
         CompanyDto companyDto = new CompanyDto();
         companyDto.setId(company.getId());
         companyDto.setEin(company.getEin());
-        companyDto.setEin(company.getBusinessName());
+        companyDto.setBusinessName(company.getBusinessName());
 
         return companyDto;
     }
