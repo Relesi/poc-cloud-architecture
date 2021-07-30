@@ -105,6 +105,7 @@ public class NaturalPersonRegisterController {
         employee.setSsn(naturalPersonRegisterDto.getSsn());
         employee.setProfile(ProfileEnum.ROLE_USUARIO);
         employee.setPassword(PasswordUtils.generateBCrypt(naturalPersonRegisterDto.getPassword()));
+
         naturalPersonRegisterDto.getQtyLunchHours().ifPresent(qtyLunchHours -> employee
                 .setQtyHoursLunch(Float.valueOf(qtyLunchHours)));
         naturalPersonRegisterDto.getQtyHoursWorkedDay().ifPresent(qtyHoursWorkedDay -> employee
