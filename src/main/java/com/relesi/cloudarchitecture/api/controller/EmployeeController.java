@@ -102,15 +102,28 @@ public class EmployeeController {
 
     }
 
+    /***
+     * Returns a DTO with an employee's data.
+     *
+     * @param employee
+     * @return
+     */
     private EmployeeDto convertEmployeeToDto(Employee employee) {
+        EmployeeDto employeeDto = new EmployeeDto();
+        employeeDto.setId(employee.getId());
+        employeeDto.setEmail(employee.getEmail());
+        employeeDto.setName(employee.getName());
 
-        return null;
+        employee.getQtyHoursLunchOpt().ifPresent(qtyHoursLunch -> employeeDto
+                .setQtyHoursLunch(Optional.of(Float.toString(qtyHoursLunch))));
+
+        employee.getQtyHoursWorkedDayOpt().ifPresent(qtyHoursWorkedDay -> employeeDto
+                .setQtyHoursWorkedDay(Optional.of(Float.toString(qtyHoursWorkedDay))));
+
+        employee.getHourValueOpt().ifPresent(hourValue -> employeeDto
+                .setHourValue(Optional.of(hourValue.toString())));
+
+        return employeeDto;
     }
-
-
-    
-
-
-
 
 }
