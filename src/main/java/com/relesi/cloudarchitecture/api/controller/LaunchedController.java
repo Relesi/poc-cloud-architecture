@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
@@ -45,7 +46,7 @@ public class LaunchedController {
     private int qtdByPage;
 
 
-    public LaunchedController(){
+    public LaunchedController() {
 
     }
 
@@ -85,7 +86,7 @@ public class LaunchedController {
      * @return
      */
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Response<LaunchedDto>> listById(@PathVariable("id") Long id){
+    public ResponseEntity<Response<LaunchedDto>> listById(@PathVariable("id") Long id) {
         log.info("Search launched by ID: {}", id);
         Response<LaunchedDto> response = new Response<LaunchedDto>();
         Optional<Launched> launched = this.launchedService.searchById(id);
@@ -110,7 +111,7 @@ public class LaunchedController {
      */
     @PostMapping
     public ResponseEntity<Response<LaunchedDto>> add(@Valid @RequestBody LaunchedDto launchedDto,
-                                                     BindingResult result) throws ParseException{
+                                                     BindingResult result) throws ParseException {
         log.info("Launched adding.: {}", launchedDto.toString());
         Response<LaunchedDto> response = new Response<LaunchedDto>();
         validateEmployee(launchedDto, result);
@@ -121,10 +122,64 @@ public class LaunchedController {
             result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
             return ResponseEntity.badRequest().body(response);
         }
-        
+
         launched = this.launchedService.persist(launched);
         response.setData(this.convertLaunchedDto(launched));
         return ResponseEntity.ok(response);
+
+    }
+
+    /***
+     * Update data of a launched.
+     *
+     * @param id
+     * @param launchedDto
+     * @param result
+     * @return
+     * @throws ParseException
+     */
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<Response<LaunchedDto>> update(@PathVariable("id") Long id,
+                                                        @Valid @RequestBody LaunchedDto launchedDto, BindingResult result) throws ParseException {
+        log.info("Launched Updating: {}", launchedDto.toString());
+        Response<LaunchedDto> response = new Response<LaunchedDto>();
+        validateEmployee(launchedDto, result);
+        launchedDto.setId(Optional.of(id));
+        Launched launched = this.convertDtoToLaunched(launchedDto, result);
+
+        if (result.hasErrors()) {
+            log.error("Error validating Launched: {}", result.getAllErrors());
+            result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
+            return ResponseEntity.badRequest().body(response);
+        }
+
+        launched = this.launchedService.persist(launched);
+        response.setData(this.convertLaunchedDto(launched));
+        return ResponseEntity.ok(response);
+
+    }
+
+    /***
+     * Remove a launched by ID.
+     *
+     * @param id
+     * @return
+     */
+    @DeleteMapping(value = "/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    public ResponseEntity<Response<String>> remove(@PathVariable("id") Long id) {
+        log.info("Removendo lançamento: {}", id);
+        Response<String> response = new Response<String>();
+        Optional<Launched> launched = this.launchedService.searchById(id);
+
+        if (!launched.isPresent()) {
+            log.info("Error removing due to posting ID: {} being invalid.", id);
+            response.getErrors().add("Error removing release. Record not found for id " + id);
+            return ResponseEntity.badRequest().body(response);
+        }
+
+        this.launchedService.remove(id);
+        return ResponseEntity.ok(new Response<String>());
 
     }
 
@@ -143,10 +198,10 @@ public class LaunchedController {
             Optional<Launched> lanc = this.launchedService.searchById(launchedDto.getId().get());
             if (lanc.isPresent()) {
                 launched = lanc.get();
-            }else {
+            } else {
                 result.addError(new ObjectError("launched", "Launched not found"));
             }
-        }else {
+        } else {
             launched.setEmployee(new Employee());
             launched.getEmployee().setId(launchedDto.getEmployeeId());
         }
@@ -157,7 +212,7 @@ public class LaunchedController {
 
         if (EnumUtils.isValidEnum(TypeEnum.class, launchedDto.getType())) {
             launched.setType(TypeEnum.valueOf(launchedDto.getType()));
-        }else {
+        } else {
             result.addError(new ObjectError("type", "Invalid type."));
         }
         return launched;
@@ -192,7 +247,7 @@ public class LaunchedController {
      */
     private LaunchedDto convertLaunchedDto(Launched launched) {
 
-        LaunchedDto launchedDto =  new LaunchedDto();
+        LaunchedDto launchedDto = new LaunchedDto();
         launchedDto.setId(Optional.of(launched.getId()));
         launchedDto.setData(this.dateFormat.format(launched.getCreationDate()));
         launchedDto.setType(launched.getType().toString());
