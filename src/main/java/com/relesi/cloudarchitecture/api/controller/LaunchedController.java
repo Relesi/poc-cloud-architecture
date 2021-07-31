@@ -51,13 +51,13 @@ public class LaunchedController {
     }
 
     /***
-     * Return listing of launched of a employee.
+     * Return listing of launched of an employee.
      *
      * @param employeeId
      * @param pag
      * @param ord
      * @param dir
-     * @return
+     * @return ResponseEntity<Response<LaunchedDto>
      */
     @GetMapping(value = "/employee/{employeeId}")
     public ResponseEntity<Response<Page<LaunchedDto>>> listByEmployeeId(
@@ -83,7 +83,7 @@ public class LaunchedController {
      * Return a launched by ID.
      *
      * @param id
-     * @return
+     * @return ResponseEntity<Response<LaunchedDto>>
      */
     @GetMapping(value = "/{id}")
     public ResponseEntity<Response<LaunchedDto>> listById(@PathVariable("id") Long id) {
@@ -106,7 +106,7 @@ public class LaunchedController {
      *
      * @param launchedDto
      * @param result
-     * @return
+     * @return ResponseEntity<Response<LaunchedDto>>
      * @throws ParseException
      */
     @PostMapping
@@ -135,7 +135,7 @@ public class LaunchedController {
      * @param id
      * @param launchedDto
      * @param result
-     * @return
+     * @return ResponseEntity<Response<Launched>>
      * @throws ParseException
      */
     @PutMapping(value = "/{id}")
@@ -163,7 +163,7 @@ public class LaunchedController {
      * Remove a launched by ID.
      *
      * @param id
-     * @return
+     * @return ResponseEntity<Response<Launched>>
      */
     @DeleteMapping(value = "/{id}")
     @PreAuthorize("hasAnyRole('ADMIN')")
@@ -243,7 +243,7 @@ public class LaunchedController {
      * Convert a entity Launched to your respective DTO.
      *
      * @param launched
-     * @return
+     * @return LaunchedDto
      */
     private LaunchedDto convertLaunchedDto(Launched launched) {
 

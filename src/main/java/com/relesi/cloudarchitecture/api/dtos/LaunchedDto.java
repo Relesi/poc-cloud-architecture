@@ -3,6 +3,7 @@ package com.relesi.cloudarchitecture.api.dtos;
 
 import com.relesi.cloudarchitecture.api.entities.Launched;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.Optional;
 
 public class LaunchedDto {
@@ -27,6 +28,7 @@ public class LaunchedDto {
         this.id = id;
     }
 
+    @NotEmpty(message = "Date cannot be empty.")
     public String getData() {
         return data;
     }
