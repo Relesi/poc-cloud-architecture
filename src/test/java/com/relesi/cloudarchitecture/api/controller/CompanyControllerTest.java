@@ -55,8 +55,7 @@ public class CompanyControllerTest {
     @Test
     @WithMockUser
     public void testSearchCompanyEinValid() throws Exception{
-        BDDMockito.given(this.companyService.searchByEin(Mockito.anyString()))
-                .willReturn(Optional.of(this.getCompanyData()));
+        BDDMockito.given(this.companyService.searchByEin(Mockito.anyString())).willReturn(Optional.of(this.getCompanyData()));
         
         mvc.perform(MockMvcRequestBuilders.get(SEARCH_COMPANY_EIN_URL + EIN)
                 .accept(MediaType.APPLICATION_JSON))
