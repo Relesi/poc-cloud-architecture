@@ -12,7 +12,7 @@ public class Launched implements Serializable {
     private static final long serialVersionUID = 6524560251526772839L;
 
     private Long id;
-    private Date currentDate;
+    private Date date;
     private String description;
     private String localization;
     private Date creationDate;
@@ -35,13 +35,13 @@ public class Launched implements Serializable {
     }
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "current_dates", insertable = false, updatable = false)
-    public Date getCurrentDate() {
-        return currentDate;
+    @Column(name = "date", nullable = false)
+    public Date getDate() {
+        return date;
     }
 
-    public void setCurrentDate(Date currentDate) {
-        this.currentDate = currentDate;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     @Column(name = "description", nullable = true)
@@ -115,7 +115,7 @@ public class Launched implements Serializable {
     public String toString() {
         return "Launched{" +
                 "id=" + id +
-                ", currentDate=" + currentDate +
+                ", date=" + date +
                 ", description='" + description + '\'' +
                 ", localization='" + localization + '\'' +
                 ", creationDate=" + creationDate +

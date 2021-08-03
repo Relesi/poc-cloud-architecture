@@ -1,16 +1,12 @@
 package com.relesi.cloudarchitecture.api.dtos;
 
-
-import com.relesi.cloudarchitecture.api.entities.Launched;
-
 import javax.validation.constraints.NotEmpty;
 import java.util.Optional;
 
 public class LaunchedDto {
 
-
     private Optional<Long> id = Optional.empty();
-    private String data;
+    private String date;
     private String type;
     private String description;
     private String localization;
@@ -29,13 +25,16 @@ public class LaunchedDto {
     }
 
     @NotEmpty(message = "Date cannot be empty.")
-    public String getData() {
-        return data;
+    public String getDate() {
+        return date;
     }
 
-    public void setData(String data) {
-        this.data = data;
+    public void setDate(String date) {
+        this.date = date;
     }
+
+
+
 
     public String getType() {
         return type;
@@ -69,11 +68,12 @@ public class LaunchedDto {
         this.employeeId = employeeId;
     }
 
+
     @Override
     public String toString() {
         return "LaunchedDto{" +
                 "id=" + id +
-                ", data='" + data + '\'' +
+                ", date='" + date + '\'' +
                 ", type='" + type + '\'' +
                 ", description='" + description + '\'' +
                 ", localization='" + localization + '\'' +
