@@ -231,6 +231,8 @@ public class LaunchedController {
         return launched;
     }
 
+
+
     /**
      * Validates an employee, verifying that he is existing and valid in the system.
      *

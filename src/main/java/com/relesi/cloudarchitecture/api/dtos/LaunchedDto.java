@@ -1,6 +1,6 @@
 package com.relesi.cloudarchitecture.api.dtos;
 
-import javax.validation.constraints.NotEmpty;
+import org.hibernate.validator.constraints.NotEmpty;
 import java.util.Optional;
 
 public class LaunchedDto {
