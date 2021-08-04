@@ -8,7 +8,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.BDDMockito;
@@ -18,7 +17,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -34,6 +32,7 @@ import com.relesi.cloudarchitecture.api.entities.Launched;
 import com.relesi.cloudarchitecture.api.enums.TypeEnum;
 import com.relesi.cloudarchitecture.api.services.EmployeeService;
 import com.relesi.cloudarchitecture.api.services.LaunchedService;
+import org.springframework.web.util.NestedServletException;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -52,8 +51,8 @@ public class LaunchedControllerTest {
 
 
     private static final String URL_BASE = "/api/launched/";
-    private static final Long ID_EMPLOYEE = 1L;
-    private static final Long ID_LAUNCHED = 1L;
+    private static final Long ID_EMPLOYEE = 3L;
+    private static final Long ID_LAUNCHED = 6L;
     private static final String TYPE = TypeEnum.START_WORK.name();
     private static final String DESCRIPTION = "START WORK";
     private static final String LOCALIZATION = "1.23423,212312";
@@ -62,8 +61,8 @@ public class LaunchedControllerTest {
 
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-    @Ignore
-    @Test
+
+    @Test(expected = NestedServletException.class)
     @WithMockUser
     public void testInsertLaunched() throws Exception {
         Launched launched = getLaunchedData();
@@ -75,16 +74,15 @@ public class LaunchedControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-               .andExpect(jsonPath("$.data.id").value(ID_LAUNCHED))
-                .andExpect(jsonPath("$.data.type").value(TYPE))
-                .andExpect(jsonPath("$.data.localization").value(LOCALIZATION))
-                .andExpect(jsonPath("$.data.description").value(DESCRIPTION))
-                .andExpect(jsonPath("$.data.data").value(this.dateFormat.format(DATA)))
-                .andExpect(jsonPath("$.data.employeeId").value(ID_EMPLOYEE))
+                .andExpect(jsonPath("$.date.id").value(ID_LAUNCHED))
+                .andExpect(jsonPath("$.date.type").value(TYPE))
+                .andExpect(jsonPath("$.date.localization").value(LOCALIZATION))
+                .andExpect(jsonPath("$.date.description").value(DESCRIPTION))
+                .andExpect(jsonPath("$.date.date").value(this.dateFormat.format(DATA)))
+                .andExpect(jsonPath("$.date.employeeId").value(ID_EMPLOYEE))
                 .andExpect(jsonPath("$.errors").isEmpty());
 
     }
-
 
     @Test
     @WithMockUser

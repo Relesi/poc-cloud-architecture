@@ -6,6 +6,7 @@ import com.relesi.cloudarchitecture.api.services.LaunchedService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ public class LaunchedServiceImpl implements LaunchedService {
     private LaunchedRepository launchedRepository;
 
 
-    @Override
+
     public Page<Launched> searchByEmployeeId(Long employeeId, PageRequest pageRequest) {
         log.info("Searching for launched for employee ID {}", employeeId);
         return this.launchedRepository.findByEmployeeId(employeeId, pageRequest);
@@ -34,7 +35,7 @@ public class LaunchedServiceImpl implements LaunchedService {
         return this.launchedRepository.findById(id);
     }
 
-    @Override
+    @CachePut("launchedById")
     public Launched persist(Launched launched) {
         log.info("Persisting a Launched: {}", launched);
         return this.launchedRepository.save(launched);
