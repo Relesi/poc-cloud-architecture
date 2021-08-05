@@ -179,22 +179,22 @@ public class Employee implements Serializable {
         updateDate = actual;
     }
 
-//    @Override
-//    public String toString() {
-//        return "Employee{" +
-//                "id=" + id +
-//                ", name='" + name + '\'' +
-//                ", email='" + email + '\'' +
-//                ", password='" + password + '\'' +
-//                ", ssn='" + ssn + '\'' +
-//                ", hourValue=" + hourValue +
-//                ", qtyHoursWorkedDay=" + qtyHoursWorkedDay +
-//                ", qtyHoursLunch=" + qtyHoursLunch +
-//                ", profile=" + profile +
-//                ", creationDate=" + creationDate +
-//                ", updateDate=" + updateDate +
-//                ", company=" + company +
-//                ", launched=" + launched +
-//                '}';
-//    }
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", ssn='" + ssn + '\'' +
+                ", hourValue=" + hourValue +
+                ", qtyHoursWorkedDay=" + qtyHoursWorkedDay +
+                ", qtyHoursLunch=" + qtyHoursLunch +
+                ", profile=" + profile +
+                ", creationDate=" + creationDate +
+                ", updateDate=" + updateDate +
+                ", company=" + company +
+                ", launched=" + launched +
+                '}';
+    }
 }

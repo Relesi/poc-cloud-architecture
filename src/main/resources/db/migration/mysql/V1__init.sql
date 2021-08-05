@@ -23,7 +23,7 @@ CREATE TABLE `employee` (
 
 CREATE TABLE `launched` (
   `id` bigint(20) NOT NULL,
-  `current_dates` datetime NOT NULL,
+  `date` datetime NOT NULL,
   `update_date` datetime NOT NULL,
   `creation_date` datetime NOT NULL,
   `description` varchar(255) DEFAULT NULL,

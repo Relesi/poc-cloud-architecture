@@ -1,24 +1,13 @@
-INSERT INTO `empresa` (`id`, `cnpj`, `data_atualizacao`, `data_criacao`, `razao_social`) 
-VALUES (NULL, '82198127000121', CURRENT_DATE(), CURRENT_DATE(), 'Kazale IT');
+INSERT INTO `company` (`id`, `ein`, `updateDate`, `creationDate`, `businessName`)
+VALUES (NULL, '99670056000110', CURRENT_DATE(), CURRENT_DATE(), 'Relesi Thinking IT');
 
 
-INSERT INTO `empresa` (`id`, `ein`, `updateDate`, `creationDate`, `businessName`)
-VALUES (NULL, '82198127000121', CURRENT_DATE(), CURRENT_DATE(), 'Reseli Thinking IT');
-
-
- private Long id;
-    private String businessName;
-    private String ein;
-    private Date creationDate;
-    private Date updateDate;
-    private List<Employee> employees;
+INSERT INTO `employee` (`id`, `ssn`, `updateDate`, `creationDate`, `email`, `name`,
+`profile`, `qtyHoursLunch`, `qtyHoursWorkedDay`, `password`, `hourValue`, `company_id`)
+VALUES (NULL, '51634696069', CURRENT_DATE(), CURRENT_DATE(), 'admin@relesi.com.br', 'ADMIN', 'ROLE_ADMIN', NULL, NULL,
+'$2a$10$6IkkIJQg3oeMaYEU95BAdekKnenjeGDt5x1GAk.evI4.lDb8baetS', NULL,
+(SELECT `id` FROM `company` WHERE `ein` = '99670056000110'));
 
 
 
 
-
-INSERT INTO `funcionario` (`id`, `cpf`, `data_atualizacao`, `data_criacao`, `email`, `nome`, 
-`perfil`, `qtd_horas_almoco`, `qtd_horas_trabalho_dia`, `senha`, `valor_hora`, `empresa_id`) 
-VALUES (NULL, '16248890935', CURRENT_DATE(), CURRENT_DATE(), 'admin@kazale.com', 'ADMIN', 'ROLE_ADMIN', NULL, NULL, 
-'$2a$06$xIvBeNRfS65L1N17I7JzgefzxEuLAL0Xk0wFAgIkoNqu9WD6rmp4m', NULL, 
-(SELECT `id` FROM `empresa` WHERE `cnpj` = '82198127000121'));
