@@ -1,4 +1,4 @@
-package com.relesi.cloudarchitecture.api.controller;
-
-public class NaturalPersonControllerTest {
-}
+//package com.relesi.cloudarchitecture.api.controller;
+//
+//public class NaturalPersonControllerTest {
+//}
