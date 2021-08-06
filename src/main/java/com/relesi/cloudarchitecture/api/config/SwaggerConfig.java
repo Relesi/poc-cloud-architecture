@@ -32,7 +32,7 @@ public class SwaggerConfig {
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2).select()
-                .apis(RequestHandlerSelectors.basePackage("com.relesi.cloudarchitecture.api.controllers"))
+                .apis(RequestHandlerSelectors.basePackage("com.relesi.cloudarchitecture.api.controller"))
                 .paths(PathSelectors.any()).build()
                 .apiInfo(apiInfo());
     }
@@ -43,18 +43,18 @@ public class SwaggerConfig {
                 .build();
     }
 
-//    @Bean
-//    public SecurityConfiguration security() {
-//        String token;
-//        try {
-//            UserDetails userDetails = this.userDetailsService.loadUserByUsername("admin@relesi.com.br");
-//            token = this.jwtTokenUtil.getToken(userDetails);
-//        } catch (Exception e) {
-//            token = "";
-//        }
-//
-//        return new SecurityConfiguration(null, null, null, null, "Bearer " + token, ApiKeyVehicle.HEADER,
-//                "Authorization", ",");
-//    }
+    @Bean
+    public SecurityConfiguration security() {
+        String token;
+        try {
+            UserDetails userDetails = this.userDetailsService.loadUserByUsername("admin@relesi.com.br");
+            token = this.jwtTokenUtil.getToken(userDetails);
+        } catch (Exception e) {
+            token = "";
+        }
+
+        return new SecurityConfiguration(null, null, null, null, "Bearer " + token, ApiKeyVehicle.HEADER,
+                "Authorization", ",");
+    }
 
 }
