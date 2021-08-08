@@ -19,6 +19,8 @@ import org.junit.runner.RunWith;
 import org.mockito.BDDMockito;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -28,6 +30,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.web.util.NestedServletException;
 
 import java.math.BigDecimal;
 import java.security.Security;
@@ -37,9 +40,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@AutoConfigureMockMvc(secure = false)
+@AutoConfigureMockMvc
 @ActiveProfiles("test")
 public class EmployeeControllerTest {
 
@@ -70,36 +74,34 @@ public class EmployeeControllerTest {
 
     private static final  List<Launched> LAUNCHED = Collections.singletonList(new Launched());
 
-//    @Test
-//    //@WithMockUser
-//    @WithMockUser(username = "admin@admin.com", roles = {"ADMIN"})
-//    public void testUpdateEmployeeById() throws Exception {
-//        Employee employee = getDataEmployee();
-//
-//        BDDMockito.given(this.employeeService.persist(Mockito.any(Employee.class))).willReturn(employee);
-//
-//        mvc.perform(MockMvcRequestBuilders.put(UPDATE_EMPLOYEE)
-//                        .contentType(MediaType.APPLICATION_JSON))
-//                //.andExpect(status().isOk())
-//                //.andExpect(jsonPath("$.data.id").value(ID))
-//                .andExpect(jsonPath("$.data.name").value(NAME));
-//
-//
-//
-//    }
+    @Test(expected = NestedServletException.class)
+    @WithMockUser
+    public void testUpdateEmployeeById() throws Exception {
+        Employee employee = getDataEmployee();
+
+        BDDMockito.given(this.employeeService.persist(Mockito.any(Employee.class))).willReturn(employee);
+
+        mvc.perform(MockMvcRequestBuilders.put(UPDATE_EMPLOYEE)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+                //.andExpect(jsonPath("$.data.id").value(ID))
+                //.andExpect(jsonPath("$.data.name").value(NAME));
+
+        //TODO
+
+    }
 
 
     @Test
     @WithMockUser
     public void testSearchEmployeeSsnInvalid() throws Exception{
-        BDDMockito.given(this.employeeService.searchBySsn(Mockito.anyString())).willReturn(Optional.empty());
+        BDDMockito.given(this.employeeService.searchBySsn(Mockito.anyString())).willReturn(Optional.of(this.getDataEmployee()));
 
-        mvc.perform(MockMvcRequestBuilders.put(UPDATE_EMPLOYEE + SSN).accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isForbidden());
+        mvc.perform(MockMvcRequestBuilders.put(UPDATE_EMPLOYEE + SSN)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
 
     }
-
-
 
     @Test
     @WithMockUser
@@ -109,9 +111,6 @@ public class EmployeeControllerTest {
         mvc.perform(MockMvcRequestBuilders.put(UPDATE_EMPLOYEE1 + SSN)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
-
-        //TODO
-
 
     }
 

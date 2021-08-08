@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public interface EmployeeService {
 
-    /***
+    /**
      * An employee remains in the database.
      *
      * @param employee
@@ -15,7 +15,7 @@ public interface EmployeeService {
 
     Employee persist(Employee employee);
 
-    /***
+    /**
      * Search and return an employee given a SSN.
      *
      * @param ssn
@@ -24,7 +24,7 @@ public interface EmployeeService {
 
     Optional<Employee> searchBySsn(String ssn);
 
-    /***
+    /**
      * Search and return an employee given a SSN.
      *
      * @param email
@@ -33,7 +33,7 @@ public interface EmployeeService {
 
     Optional<Employee> searchByEmail(String email);
 
-    /***
+    /**
      * Search and return an employee by ID.
      *
      * @param id

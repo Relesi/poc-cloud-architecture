@@ -1,31 +1,43 @@
 package com.relesi.cloudarchitecture.api.controller;
 
-import com.relesi.cloudarchitecture.api.dtos.LaunchedDto;
-import com.relesi.cloudarchitecture.api.entities.Employee;
-import com.relesi.cloudarchitecture.api.entities.Launched;
-import com.relesi.cloudarchitecture.api.enums.TypeEnum;
-import org.springframework.data.domain.Sort.Direction;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Optional;
+
+import javax.validation.Valid;
 
 import org.apache.commons.lang3.EnumUtils;
-import com.relesi.cloudarchitecture.api.Response.Response;
-import com.relesi.cloudarchitecture.api.services.EmployeeService;
-import com.relesi.cloudarchitecture.api.services.LaunchedService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Optional;
+import com.relesi.cloudarchitecture.api.dtos.LaunchedDto;
+import com.relesi.cloudarchitecture.api.entities.Employee;
+import com.relesi.cloudarchitecture.api.entities.Launched;
+import com.relesi.cloudarchitecture.api.enums.TypeEnum;
+import com.relesi.cloudarchitecture.api.Response.Response;
+import com.relesi.cloudarchitecture.api.services.LaunchedService;
+import com.relesi.cloudarchitecture.api.services.EmployeeService;
+
+
 
 @RestController
 @RequestMapping("/api/launched")
@@ -50,7 +62,7 @@ public class LaunchedController {
 
     }
 
-    /***
+    /**
      * Return listing of launched of an employee.
      *
      * @param employeeId
@@ -79,7 +91,8 @@ public class LaunchedController {
 
     }
 
-    /***
+
+    /**
      * Return a launched by ID.
      *
      * @param id
@@ -101,7 +114,7 @@ public class LaunchedController {
         return ResponseEntity.ok(response);
     }
 
-    /***
+    /**
      * Adds a new Launched.
      *
      * @param launchedDto
@@ -129,7 +142,7 @@ public class LaunchedController {
 
     }
 
-    /***
+    /**
      * Update data of a launched.
      *
      * @param id
@@ -159,7 +172,7 @@ public class LaunchedController {
 
     }
 
-    /***
+    /**
      * Remove a launched by ID.
      *
      * @param id
@@ -168,7 +181,7 @@ public class LaunchedController {
     @DeleteMapping(value = "/{id}")
     @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<Response<String>> remove(@PathVariable("id") Long id) {
-        log.info("Removendo lançamento: {}", id);
+        log.info("Removing launched: {}", id);
         Response<String> response = new Response<String>();
         Optional<Launched> launched = this.launchedService.searchById(id);
 
@@ -183,7 +196,7 @@ public class LaunchedController {
 
     }
 
-    /***
+    /**
      * Convert a LaunchedDto to a entity Launched.
      *
      * @param launchedDto
@@ -208,7 +221,7 @@ public class LaunchedController {
 
         launched.setDescription(launchedDto.getDescription());
         launched.setLocalization(launchedDto.getLocalization());
-        launched.setCurrentDate(this.dateFormat.parse(launchedDto.getData()));
+        launched.setDate(this.dateFormat.parse(launchedDto.getDate()));
 
         if (EnumUtils.isValidEnum(TypeEnum.class, launchedDto.getType())) {
             launched.setType(TypeEnum.valueOf(launchedDto.getType()));
@@ -218,7 +231,9 @@ public class LaunchedController {
         return launched;
     }
 
-    /***
+
+
+    /**
      * Validates an employee, verifying that he is existing and valid in the system.
      *
      * @param launchedDto
@@ -239,7 +254,7 @@ public class LaunchedController {
     }
 
 
-    /***
+    /**
      * Convert a entity Launched to your respective DTO.
      *
      * @param launched
@@ -248,11 +263,12 @@ public class LaunchedController {
     private LaunchedDto convertLaunchedDto(Launched launched) {
 
         LaunchedDto launchedDto = new LaunchedDto();
+
         launchedDto.setId(Optional.of(launched.getId()));
-        launchedDto.setData(this.dateFormat.format(launched.getCreationDate()));
+        launchedDto.setDate(this.dateFormat.format(launched.getCreationDate()));
         launchedDto.setType(launched.getType().toString());
         launchedDto.setDescription(launched.getDescription());
-        launchedDto.setLocalization(launched.getDescription());
+        launchedDto.setLocalization(launched.getLocalization());
         launchedDto.setEmployeeId(launched.getEmployee().getId());
 
         return launchedDto;

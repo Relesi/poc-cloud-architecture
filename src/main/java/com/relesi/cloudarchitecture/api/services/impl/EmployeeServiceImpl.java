@@ -18,27 +18,22 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-
     @Override
     public Employee persist(Employee employee) {
         log.info("Persisting Employee: {}", employee);
         return this.employeeRepository.save(employee);
     }
 
-    @Override
     public Optional<Employee> searchBySsn(String ssn) {
         log.info("Looking for a employee for the SSN {}", ssn);
         return Optional.ofNullable(employeeRepository.findBySsn(ssn));
-
     }
 
-    @Override
     public Optional<Employee> searchByEmail(String email) {
         log.info("Looking for a employee for the Email {}", email);
         return Optional.ofNullable(employeeRepository.findByEmail(email));
     }
 
-    @Override
     public Optional<Employee> searchById(Long id) {
         log.info("Looking for a employee for the ID {}", id);
         return this.employeeRepository.findById(id);
