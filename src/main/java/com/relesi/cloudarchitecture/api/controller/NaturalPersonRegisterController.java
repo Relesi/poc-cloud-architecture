@@ -39,7 +39,7 @@ public class NaturalPersonRegisterController {
     }
 
     /***
-     * Register a employee natural person in the system.
+     * Register an employee natural person in the system.
      *
      * @param naturalPersonRegisterDto
      * @param result
