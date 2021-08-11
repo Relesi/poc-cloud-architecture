@@ -1,6 +1,5 @@
 package com.relesi.cloudarchitecture.api.controller;
 
-
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
