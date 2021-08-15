@@ -8,7 +8,8 @@
 ![](https://img.shields.io/badge/jwt-✓-blue.svg)
 ![](https://img.shields.io/badge/swagger_2-✓-blue.svg)
 
-Schedule System API with Java and Spring Boot.
+
+Architecture API with Spring Boot, Spring Cloud, Docker and creating poc-Cloud.
 ***
 
 ## Schedule
