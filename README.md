@@ -12,7 +12,7 @@
 Architecture API with Spring Boot, Spring Cloud, Docker and creating poc-Cloud.
 ***
 
-## Schedule
+## Architecture
 
 ***
 
