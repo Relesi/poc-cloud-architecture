@@ -287,7 +287,7 @@ cache:
 Private Repos
 - Add to your `.travis.yml` file.
 
-#### Controller
+#### Respurce
 
 * System Architecture Overview
 
