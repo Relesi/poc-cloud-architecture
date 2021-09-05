@@ -280,7 +280,7 @@ before_cache:
 cache:
   directories:
     - $HOME/.gradle/caches/
-    - $HOME/.gradle/wrapper/
+    
   
 
 ```
